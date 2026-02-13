@@ -3,43 +3,51 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
+ * Class BaseController
  *
- * Extend this class in any new controllers:
- * ```
+ * BaseController proporciona un lugar conveniente para cargar componentes
+ * y realizar funciones que son necesarias para todos tus controladores.
+ * Extiende esta clase en cualquier nuevo controlador:
  *     class Home extends BaseController
- * ```
  *
- * For security, be sure to declare any new methods as protected or private.
+ * Para mayor seguridad, asegúrate de declarar cualquier nuevo método como protected o private.
  */
 abstract class BaseController extends Controller
 {
     /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
+     * Instancia de la solicitud principal.
+     *
+     * @var CLIRequest|IncomingRequest
      */
-
-    // protected $session;
+    protected $request;
 
     /**
-     * @return void
+     * Una instancia de Helpers a cargar automáticamente tras la instanciación.
+     * Estos helpers estarán disponibles para todos los controladores que hereden de BaseController.
+     *
+     * @var array
+     */
+    protected $helpers = [];
+
+    /**
+     * Sé que el constructor no se puede evitar. Pero no olvides jugar bien
+     * con él y llamar a parent::__construct($request, $response, $logger);
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        // Load here all helpers you want to be available in your controllers that extend BaseController.
-        // Caution: Do not put the this below the parent::initController() call below.
-        // $this->helpers = ['form', 'url'];
-
-        // Caution: Do not edit this line.
+        // No edites esta línea
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
-        // $this->session = service('session');
+        // Precarga cualquier modelo, biblioteca, etc, aquí.
+
+        // Ejemplo:
+        // $this->session = \Config\Services::session();
     }
 }
