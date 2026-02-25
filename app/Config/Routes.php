@@ -36,8 +36,11 @@ $routes->get('reportes', 'Reportes::index');
 //Usuarios
 $routes->get('usuarios', 'Usuarios::index');
 
-// Punto de Venta
+// Rutas del Punto de Venta
 $routes->get('pos', 'POS::index');
+$routes->post('pos/buscarProducto', 'POS::buscarProducto');
+$routes->post('pos/guardarVenta', 'POS::guardarVenta');
+$routes->post('pos/verificarStock', 'POS::verificarStock');
 
 // Test (prueba para la base de datos)
 $routes->get('/test', 'Test::index');

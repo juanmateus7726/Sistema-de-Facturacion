@@ -135,7 +135,7 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/') ?>">
+                        <a class="nav-link" href="<?= base_url('dashboard') ?>">
                             <i class="bi bi-house-door"></i> Dashboard
                         </a>
                     </li>
