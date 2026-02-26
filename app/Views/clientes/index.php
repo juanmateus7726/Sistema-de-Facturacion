@@ -1,9 +1,7 @@
 <?php
-// Incluye el header con navbar
 echo $this->include('layouts/header');
 ?>
 
-<!-- Encabezado de la página con título y botón de acción -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-people"></i> Gestión de Clientes</h2>
     <a href="<?= base_url('clientes/crear') ?>" class="btn btn-success-custom">
@@ -11,44 +9,82 @@ echo $this->include('layouts/header');
     </a>
 </div>
 
-<!-- Tarjeta con la tabla de clientes -->
+<!-- Mensajes -->
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle"></i> <?= session()->getFlashdata('success') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-circle"></i> <?= session()->getFlashdata('error') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php endif; ?>
+
+<!-- Tabla de clientes -->
 <div class="card">
     <div class="card-header">
         <i class="bi bi-list-ul"></i> Lista de Clientes
     </div>
     <div class="card-body">
-        <!-- Mensaje informativo sobre desarrollo futuro -->
-        <div class="alert alert-info">
-            <i class="bi bi-info-circle"></i> 
-            <strong>Módulo en construcción:</strong> La funcionalidad completa CRUD se implementará en Semana 6
-        </div>
-        
-        <!-- Vista previa de estructura de tabla -->
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Identificación</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Dirección</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Mensaje cuando no hay datos -->
-                <tr>
-                    <td colspan="7" class="text-center text-muted">
-                        <i class="bi bi-inbox"></i> No hay clientes registrados
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <?php if (empty($clientes)): ?>
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> 
+                No hay clientes registrados. <a href="<?= base_url('clientes/crear') ?>">Crear el primero</a>
+            </div>
+        <?php else: ?>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Documento</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Dirección</th>
+                            <th width="150">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($clientes as $cliente): ?>
+                        <tr>
+                            <td><strong><?= esc($cliente['documento']) ?></strong></td>
+                            <td><?= esc($cliente['nombre']) ?></td>
+                            <td><?= esc($cliente['telefono']) ?: '<span class="text-muted">-</span>' ?></td>
+                            <td><?= esc($cliente['correo']) ?: '<span class="text-muted">-</span>' ?></td>
+                            <td><?= esc($cliente['direccion']) ?: '<span class="text-muted">-</span>' ?></td>
+                            <td>
+                                <a href="<?= base_url('clientes/editar/'.$cliente['id_cliente']) ?>" 
+                                   class="btn btn-sm btn-primary" 
+                                   title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="<?= base_url('clientes/eliminar/'.$cliente['id_cliente']) ?>" 
+                                   class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('¿Está seguro de eliminar este cliente?')"
+                                   title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-3">
+                <small class="text-muted">
+                    <i class="bi bi-info-circle"></i> 
+                    Total de clientes: <strong><?= count($clientes) ?></strong>
+                </small>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
 <?php
-// Incluye el footer
 echo $this->include('layouts/footer');
 ?>
