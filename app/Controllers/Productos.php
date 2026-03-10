@@ -157,54 +157,76 @@ class Productos extends BaseController
         return redirect()->to('/productos')->with('error', 'Prodducto no encontrado');
     }
 
-    // Reglas de validacion (similar a guardar, pero el codigo puede repetirse si es el mismo producto)
-    $reglas = [
-        'codigo' => [
-            'rules' => 'required|min_length[3]|is_unique[productos.codigo,id_producto,$id]',
-            'errors' => [
-                'required' => 'El codigo es obligatorio',
-                'min_length' => 'El codigo debe de tener al menos 3 caracteres',
-                'is_unique' => 'Este codigo ya existe'
-            ]
-        ],
-        'nombre' => [
-            'rules' => 'required|min_length[3]',
-            'errors' => [
-                'required' => 'El nombre es obligatorio',
-                'min_length' => 'El nombre debe de tener al menos 3 caracteres'
-            ]
-        ],
-        'precio' => [
-            'rules' => 'required|decimal|greater_than[0]',
-            'errors' => [
-                'required' => 'El precio es obligatorio',
-                'decimal' => 'El precio debe de ser un numero valido',
-                'greater_than' => 'El precio debe ser mayor a 0'
-            ]
-        ],
-        'precio_compra' => [
-            'rules' => 'required|decimal|greater_than[0]',
-            'errors' => [
-                'required' => 'El precio de compra es obligatorio',
-                'decimal' => 'El precio de compra debe de ser un numero valido',
-                'greater_than' => 'El precio de compra debe de ser mayor a 0'
-            ]
-        ],
-        'stock' => [
-            'rules' => 'required|integer|greater_than_equal_to[0]',
-            'errors' => [
-                'required' => 'El stock es obligatorio',
-                'integer' => 'El stock minimo debe de ser un numero entero',
-                'greater_than_equal_to' => 'El stock minimo no puede ser negativo'
-            ]
-        ],
-        'id_categoria' => [
-            'rules' => 'required',
-            'errors' => [
-                'required' => 'Debe seleccionar una categoria'
-            ]
+// Reglas de validación
+$reglas = [
+    'codigo' => [
+        'rules' => 'required|min_length[3]',
+        'errors' => [
+            'required' => 'El código es obligatorio',
+            'min_length' => 'El código debe tener al menos 3 caracteres'
         ]
-    ];
+    ],
+    'nombre' => [
+        'rules' => 'required|min_length[3]',
+        'errors' => [
+            'required' => 'El nombre es obligatorio',
+            'min_length' => 'El nombre debe tener al menos 3 caracteres'
+        ]
+    ],
+    'precio' => [
+        'rules' => 'required|decimal|greater_than[0]',
+        'errors' => [
+            'required' => 'El precio es obligatorio',
+            'decimal' => 'El precio debe ser un número válido',
+            'greater_than' => 'El precio debe ser mayor a 0'
+        ]
+    ],
+    'precio_compra' => [
+        'rules' => 'required|decimal|greater_than[0]',
+        'errors' => [
+            'required' => 'El precio de compra es obligatorio',
+            'decimal' => 'El precio de compra debe ser un número válido',
+            'greater_than' => 'El precio de compra debe ser mayor a 0'
+        ]
+    ],
+    'stock' => [
+        'rules' => 'required|integer|greater_than_equal_to[0]',
+        'errors' => [
+            'required' => 'El stock es obligatorio',
+            'integer' => 'El stock debe ser un número entero',
+            'greater_than_equal_to' => 'El stock no puede ser negativo'
+        ]
+    ],
+    'stock_minimo' => [
+        'rules' => 'required|integer|greater_than_equal_to[0]',
+        'errors' => [
+            'required' => 'El stock mínimo es obligatorio',
+            'integer' => 'El stock mínimo debe ser un número entero',
+            'greater_than_equal_to' => 'El stock mínimo no puede ser negativo'
+        ]
+    ],
+    'id_categoria' => [
+        'rules' => 'required',
+        'errors' => [
+            'required' => 'Debe seleccionar una categoría'
+        ]
+    ]
+];
+
+// Validar unicidad del código SOLO si cambió
+$productoActual = $model->find($id);
+$codigoNuevo = $this->request->getPost('codigo');
+
+if ($codigoNuevo !== $productoActual['codigo']) {
+    // Solo validar unicidad si el código cambió
+    $existe = $model->where('codigo', $codigoNuevo)
+                    ->where('id_producto !=', $id)
+                    ->first();
+    
+    if ($existe) {
+        return redirect()->back()->withInput()->with('errors', ['codigo' => 'Este código ya existe']);
+    }
+}
 
     // Validar
     if (!$this->validate($reglas)) {

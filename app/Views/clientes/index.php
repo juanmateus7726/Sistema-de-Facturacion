@@ -1,13 +1,36 @@
 <?php
 echo $this->include('layouts/header');
+
+// Detectar qué tab está activo
+$currentTab = uri_string() == 'clientes' ? 'listado' : 'top';
 ?>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-people"></i> Gestión de Clientes</h2>
-    <a href="<?= base_url('clientes/crear') ?>" class="btn btn-success-custom">
-        <i class="bi bi-plus-circle"></i> Nuevo Cliente
-    </a>
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2><i class="bi bi-people"></i> Gestión de Clientes</h2>
+        <?php if ($currentTab == 'listado'): ?>
+        <a href="<?= base_url('clientes/crear') ?>" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Cliente
+        </a>
+        <?php endif; ?>
+    </div>
 </div>
+
+<!-- Tabs como links -->
+<ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+        <a class="nav-link <?= $currentTab == 'listado' ? 'active' : '' ?>" 
+           href="<?= base_url('clientes') ?>">
+            <i class="bi bi-list-ul"></i> Listado de Clientes
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link <?= $currentTab == 'top' ? 'active' : '' ?>" 
+           href="<?= base_url('reportes/clientes') ?>">
+            <i class="bi bi-trophy"></i> Top Clientes
+        </a>
+    </li>
+</ul>
 
 <!-- Mensajes -->
 <?php if (session()->getFlashdata('success')): ?>

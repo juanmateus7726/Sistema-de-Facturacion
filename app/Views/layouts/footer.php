@@ -1,15 +1,15 @@
-</div> <!-- Cierra el container principal -->
-
-    <!-- Footer del sistema -->
-    <footer class="mt-5 py-3 bg-light text-center">
+</div> <!-- Cierra main-container -->
+    
+    <!-- Footer Moderno -->
+    <footer style="background: rgba(255, 255, 255, 0.95); padding: 2rem 0; margin-top: 3rem; text-align: center;">
         <div class="container">
-            <p class="text-muted mb-0">
-                Sistema de Facturación &copy; <?= date('Y') ?> - Desarrollado por Juan
+            <p style="margin: 0; color: var(--secondary); font-size: 0.875rem;">
+                <strong>Sistema de Facturación</strong> © <?= date('Y') ?> - Desarrollado por Juan
             </p>
         </div>
     </footer>
-
-    <!-- Bootstrap 5 JS Bundle (incluye Popper) -->
+    
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

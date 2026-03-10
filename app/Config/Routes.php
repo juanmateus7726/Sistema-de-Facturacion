@@ -22,6 +22,9 @@ $routes->get('productos/eliminar/(:num)', 'Productos::eliminar/$1');
 
 // Ventas
 $routes->get('ventas', 'Ventas::index');
+$routes->get('ventas/detalle/(:num)', 'Ventas::detalle/$1');
+$routes->get('ventas/imprimir/(:num)', 'Ventas::imprimir/$1');
+$routes->post('ventas/anular/(:num)', 'Ventas::anular/$1');
 
 // Clientes
 $routes->get('clientes', 'Clientes::index');
@@ -41,7 +44,9 @@ $routes->get('inventario', 'Inventario::index');
 $routes->get('proveedores', 'Proveedores::index');
 
 //Reportes
-$routes->get('reportes', 'Reportes::index');
+$routes->get('reportes/ventas', 'Reportes::ventas');
+$routes->get('reportes/clientes', 'Reportes::clientes');
+$routes->get('reportes/inventario', 'Reportes::inventario');
 
 //Usuarios
 $routes->get('usuarios', 'Usuarios::index');

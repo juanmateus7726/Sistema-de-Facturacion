@@ -8,7 +8,7 @@ class VentasModel extends Model
 {
     protected $table = 'ventas';
     protected $primaryKey = 'id_venta';
-    protected $allowedFields = ['numero_factura', 'fecha_hora', 'id_cliente', 'id_usuario', 'subtotal', 'descuento_total', 'iva', 'total', 'metodo_pago', 'monto_recibido', 'cambio', 'estado'];
+    protected $allowedFields = ['numero_factura', 'fecha_hora', 'id_cliente', 'id_usuario', 'subtotal', 'descuento_total', 'iva', 'total', 'metodo_pago', 'monto_recibido', 'cambio', 'estado', 'pago_mixto_detalle'];
     protected $useTimestamps = false;
     public function generarNumeroFactura()
     {

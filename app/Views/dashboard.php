@@ -74,20 +74,6 @@ echo $this->include('layouts/header');
         </div>
     </div>
 
-    <!-- Reportes -->
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="bi bi-graph-up" style="font-size: 3rem; color: var(--color-exito);"></i>
-                <h5 class="card-title mt-3">Reportes</h5>
-                <p class="card-text">Estadísticas y reportes</p>
-                <a href="<?= base_url('reportes') ?>" class="btn btn-primary-custom">
-                    <i class="bi bi-arrow-right"></i> Acceder
-                </a>
-            </div>
-        </div>
-    </div>
-
     <!-- Compras -->
     <div class="col-md-4 mb-4">
         <div class="card h-100">
