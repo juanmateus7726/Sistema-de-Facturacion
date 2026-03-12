@@ -1231,11 +1231,18 @@ function mostrarReciboVenta(datos) {
             <span>FORMA DE PAGO: ${datos.datos_venta.metodo_pago.toUpperCase()}</span>
             <span>${total.toLocaleString('es-CO')}</span>
         </div>
-        <div class="total-line">
-            <span>CAMBIO</span>
-            <span>0</span>
-        </div>
     </div>
+    ${datos.datos_venta.metodo_pago === 'efectivo' && datos.datos_venta.monto_recibido ? `
+    <div class="total-line">
+        <span>MONTO RECIBIDO</span>
+        <span>${Number(datos.datos_venta.monto_recibido).toLocaleString('es-CO')}</span>
+    </div>
+    <div class="total-line">
+        <span>CAMBIO</span>
+        <span>${Number(datos.datos_venta.cambio).toLocaleString('es-CO')}</span>
+    </div>
+    ` : ''}
+</div>
     
     <!-- RESUMEN IMPUESTOS -->
     <div class="resumen-impuestos">
